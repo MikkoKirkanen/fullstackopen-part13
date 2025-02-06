@@ -1,0 +1,30 @@
+{
+  "name": "fullstackopen-part13",
+  "version": "1.0.0",
+  "description": "",
+  "homepage": "https://github.com/MikkoKirkanen/fullstackopen-part13#readme",
+  "bugs": {
+    "url": "https://github.com/MikkoKirkanen/fullstackopen-part13/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MikkoKirkanen/fullstackopen-part13.git"
+  },
+  "license": "MIT",
+  "author": "Mikko Kirkanen",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "cli": "node cli.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "pg": "^8.13.1",
+    "sequelize": "^6.37.5"
+  },
+  "devDependencies": {
+    "@flydotio/dockerfile": "^0.7.4"
+  }
+}
