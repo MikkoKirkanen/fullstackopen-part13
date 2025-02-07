@@ -15,6 +15,9 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "proxy": "flyctl proxy 5432 -a fullstackopen-part13-kirkanen-db",
     "cli": "node cli.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -25,6 +28,7 @@
     "sequelize": "^6.37.5"
   },
   "devDependencies": {
-    "@flydotio/dockerfile": "^0.7.4"
+    "@flydotio/dockerfile": "^0.7.4",
+    "nodemon": "^3.1.9"
   }
 }

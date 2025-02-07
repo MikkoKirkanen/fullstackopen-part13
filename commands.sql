@@ -1,5 +1,5 @@
 CREATE TABLE blogs (
-  id bigint GENERATED ALWAYS AS IDENTITY UNIQUE,
+  id SERIAL PRIMARY KEY,
   author text,
   url text NOT NULL,
   title text NOT NULL,
