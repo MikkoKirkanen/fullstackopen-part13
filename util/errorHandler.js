@@ -1,13 +1,11 @@
+import { mapAndClearErrors } from './helper.js'
+
 export const errorHandler = (error, _req, res, next) => {
-  switch (error.title) {
-    case 'Blog not found':
-      return res.status(404).send(error)
-    case 'Blog creation failed':
-      return res.status(400).send(error)
-    case 'Blog update failed':
-      return res.status(400).send(error)
-    case 'Blog deletion failed':
-      return res.status(400).send(error)
+  console.log(error)
+  if (error) {
+    error.messages = mapAndClearErrors(error)
+    delete error.content
+    return res.status(error.code || 400).send(error)
   }
 
   next(error)

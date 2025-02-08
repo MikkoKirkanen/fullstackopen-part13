@@ -6,7 +6,7 @@ class Blog extends Model {}
 Blog.init(
   {
     id: {
-      type: DataTypes.BIGINT,
+      type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,
     },
@@ -24,6 +24,11 @@ Blog.init(
     likes: {
       type: DataTypes.INTEGER,
       defaultValue: 0,
+    },
+    userId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: { model: 'users', key: 'id' },
     },
   },
   {
