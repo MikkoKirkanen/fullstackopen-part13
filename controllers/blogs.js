@@ -3,6 +3,7 @@ import { Blog, User } from '../models/index.js'
 import { SECRET } from '../util/config.js'
 import { throwError } from '../util/helper.js'
 import jwt from 'jsonwebtoken'
+import { Op } from 'sequelize'
 
 const router = express.Router()
 
@@ -32,6 +33,21 @@ router.get('/', async (req, res) => {
     include: {
       model: User,
     },
+    where: {
+      [Op.or]: [
+        {
+          title: {
+            [Op.iLike]: `%${req.query.search ?? ''}%`,
+          },
+        },
+        {
+          author: {
+            [Op.iLike]: `%${req.query.search ?? ''}%`,
+          },
+        },
+      ],
+    },
+    order: [['likes', 'DESC']],
   })
   res.json(blogs)
 })
@@ -42,7 +58,7 @@ router.get('/:id', blogFinder, async (req, res) => {
 
 router.post('/', tokenExtractor, async (req, res, next) => {
   try {
-    const user = User.findByPk(req.decodedToken.id)
+    const user = await User.findByPk(req.decodedToken.id)
     const blog = await Blog.create({
       ...req.body,
       userId: user.id,
