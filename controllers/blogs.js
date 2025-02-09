@@ -1,9 +1,8 @@
 import express from 'express'
 import { Blog, User } from '../models/index.js'
-import { SECRET } from '../util/config.js'
 import { throwError } from '../util/helper.js'
-import jwt from 'jsonwebtoken'
 import { Op } from 'sequelize'
+import { tokenExtractor } from '../util/token.js'
 
 const router = express.Router()
 
@@ -11,19 +10,6 @@ const blogFinder = async (req, _res, next) => {
   req.blog = await Blog.findByPk(req.params.id)
   if (!req.blog) {
     next({ title: 'Blog not found', messages: 'Malformatted id', code: 404 })
-  }
-  next()
-}
-
-const tokenExtractor = (req, res, next) => {
-  const auth = req.get('authorization')
-  if (!auth?.toLowerCase().startsWith('bearer ')) {
-    next({ title: 'Token missing', code: 401 })
-  }
-  try {
-    req.decodedToken = jwt.verify(auth.slice(7), SECRET)
-  } catch {
-    next({ title: 'Token invalid', code: 401 })
   }
   next()
 }

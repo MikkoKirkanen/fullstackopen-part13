@@ -19,7 +19,6 @@ router.post('/', async (req, res, next) => {
     const user = await User.create(req.body)
     res.json(user)
   } catch (content) {
-    console.log(content)
     content.prefix = 'user.'
     next({ title: 'User creation failed', content })
   }
@@ -39,9 +38,29 @@ router.put('/:username', async (req, res, next) => {
     await user.save()
     res.json(user)
   } catch (content) {
-    // const messages = mapAndClearErrors(e.errors, 'user.')
     next({ title: 'User update failed', content })
   }
+})
+
+router.get('/:id', async (req, res) => {
+  const read = req.query.read ? { read: req.query.read } : {}
+  const user = await User.findByPk(req.params.id, {
+    include: [
+      {
+        model: Blog,
+        as: 'readings',
+        attributes: { exclude: ['userId', 'createdAt', 'updatedAt'] },
+        through: {
+          as: 'readinglist',
+          attributes: ['read', 'id'],
+          where: {
+            ...read,
+          },
+        },
+      },
+    ],
+  })
+  res.json(user)
 })
 
 export default router
