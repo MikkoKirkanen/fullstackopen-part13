@@ -19,6 +19,7 @@ router.post('/', async (req, res, next) => {
     const user = await User.create(req.body)
     res.json(user)
   } catch (content) {
+    console.log(content)
     content.prefix = 'user.'
     next({ title: 'User creation failed', content })
   }

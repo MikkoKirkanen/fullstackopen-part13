@@ -1,7 +1,6 @@
 import { mapAndClearErrors } from './helper.js'
 
 export const errorHandler = (error, _req, res, next) => {
-  console.log(error)
   if (error) {
     error.messages = mapAndClearErrors(error)
     delete error.content

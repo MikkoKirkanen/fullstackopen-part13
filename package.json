@@ -19,17 +19,20 @@
     "dev": "nodemon index.js",
     "proxy": "flyctl proxy 5432 -a fullstackopen-part13-kirkanen-db",
     "cli": "node cli.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "migration:down": "node util/rollback.js"
   },
   "dependencies": {
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "jsonwebtoken": "^9.0.2",
     "pg": "^8.13.1",
-    "sequelize": "^6.37.5"
+    "sequelize": "^6.37.5",
+    "umzug": "^3.8.2"
   },
   "devDependencies": {
     "@flydotio/dockerfile": "^0.7.4",
-    "nodemon": "^3.1.9"
+    "nodemon": "^3.1.9",
+    "sequelize-cli": "^6.6.2"
   }
 }
