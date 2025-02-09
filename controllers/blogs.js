@@ -3,6 +3,7 @@ import { Blog, User } from '../models/index.js'
 import { throwError } from '../util/helper.js'
 import { Op } from 'sequelize'
 import { tokenExtractor } from '../util/token.js'
+import { validateSession } from '../util/session.js'
 
 const router = express.Router()
 
@@ -42,7 +43,7 @@ router.get('/:id', blogFinder, async (req, res) => {
   res.json(req.blog)
 })
 
-router.post('/', tokenExtractor, async (req, res, next) => {
+router.post('/', [tokenExtractor, validateSession], async (req, res, next) => {
   try {
     const user = await User.findByPk(req.decodedToken.id)
     const blog = await Blog.create({
@@ -67,17 +68,21 @@ router.put('/:id', blogFinder, async (req, res, next) => {
   }
 })
 
-router.delete('/:id', tokenExtractor, blogFinder, async (req, res, next) => {
-  try {
-    const user = await User.findByPk(req.decodedToken.id)
-    if (user?.id != req.blog.userId) {
-      throwError("User cannot delete another user's blog")
+router.delete(
+  '/:id',
+  [tokenExtractor, validateSession, blogFinder],
+  async (req, res, next) => {
+    try {
+      const user = await User.findByPk(req.decodedToken.id)
+      if (user?.id != req.blog.userId) {
+        throwError("User cannot delete another user's blog")
+      }
+      await req.blog.destroy()
+      res.json(req.blog)
+    } catch (content) {
+      next({ title: 'Blog deletion failed', content })
     }
-    await req.blog.destroy()
-    res.json(req.blog)
-  } catch (content) {
-    next({ title: 'Blog deletion failed', content })
   }
-})
+)
 
 export default router

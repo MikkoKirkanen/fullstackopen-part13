@@ -1,11 +1,14 @@
 import Blog from './blog.js'
 import User from './user.js'
-import ReadingLists from './reading_list.js'
+import ReadingList from './reading_list.js'
+import Session from './session.js'
 
 User.hasMany(Blog)
 Blog.belongsTo(User)
 
-User.belongsToMany(Blog, { through: ReadingLists, as: 'readings' })
-Blog.belongsToMany(User, { through: ReadingLists, as: 'readinglists' })
+User.belongsToMany(Blog, { through: ReadingList, as: 'readings' })
+Blog.belongsToMany(User, { through: ReadingList, as: 'readinglist' })
 
-export { Blog, User, ReadingLists }
+User.hasOne(Session)
+
+export { Blog, User, ReadingList, Session }

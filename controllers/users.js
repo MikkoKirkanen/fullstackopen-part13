@@ -42,6 +42,27 @@ router.put('/:username', async (req, res, next) => {
   }
 })
 
+router.put('/disable', async (req, res, next) => {
+  try {
+    const user = await User.findOne({
+      where: {
+        username: req.body.username,
+      },
+    })
+    if (!(user && req.body.username)) {
+      throwError(!user ? 'user not found' : 'username cannot be empty')
+    }
+    if (req.body.disable) {
+      throwError('disable value is missing')
+    }
+    user.disable = req.body.disable
+    await user.save()
+    res.json(user)
+  } catch (content) {
+    next({ title: 'User disable failed', content })
+  }
+})
+
 router.get('/:id', async (req, res) => {
   const read = req.query.read ? { read: req.query.read } : {}
   const user = await User.findByPk(req.params.id, {

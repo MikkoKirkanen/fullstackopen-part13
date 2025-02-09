@@ -4,6 +4,7 @@ import usersRouter from './controllers/users.js'
 import loginRouter from './controllers/login.js'
 import authorsRouter from './controllers/authors.js'
 import readinglistsRouter from './controllers/reading_lists.js'
+import logoutRouter from './controllers/logout.js'
 import { errorHandler } from './util/errorHandler.js'
 import { connectToDatabase } from './util/db.js'
 import { PORT } from './util/config.js'
@@ -15,6 +16,7 @@ app.use('/api/users', usersRouter)
 app.use('/api/login', loginRouter)
 app.use('/api/authors', authorsRouter)
 app.use('/api/readinglists', readinglistsRouter)
+app.use('/api/logout', logoutRouter)
 
 app.use(errorHandler)
 

@@ -4,7 +4,7 @@ import { sequelize } from '../util/db.js'
 
 const router = express.Router()
 
-router.get('/', async (req, res) => {
+router.get('/', async (_req, res) => {
   const authors = await Blog.findAll({
     attributes: [
       'author',

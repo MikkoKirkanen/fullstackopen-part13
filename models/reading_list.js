@@ -1,9 +1,9 @@
 import { Model, DataTypes } from 'sequelize'
 import { sequelize } from '../util/db.js'
 
-class ReadingLists extends Model {}
+class ReadingList extends Model {}
 
-ReadingLists.init(
+ReadingList.init(
   {
     id: {
       type: DataTypes.INTEGER,
@@ -29,8 +29,8 @@ ReadingLists.init(
     sequelize,
     underscored: true,
     timestamps: false,
-    modelName: 'readingLists',
+    modelName: 'readingList',
   }
 )
 
-export default ReadingLists
+export default ReadingList
